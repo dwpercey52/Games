@@ -1,0 +1,118 @@
+print("Turkey Starting Up!")
+
+
+function TurChk()
+ turtle.select(1)
+ if turtle.getFuelLevel() == 0 then
+   turtle.refuel()
+ end
+end
+
+function RotateRight()
+    TurChk()
+    turtle.turnRight()
+    if turtle.forward() == true then
+        turtle.turnRight()
+    else
+        turtle.dig()
+        turtle.forward()
+        turtle.turnRight()
+    end
+end
+
+function RotateLeft()
+    TurChk()
+    turtle.turnLeft()
+    if turtle.forward() == true then
+        turtle.turnLeft()
+    else
+        turtle.dig()
+        turtle.forward()
+        turtle.turnLeft()
+    end
+end
+
+function UpMove()
+    TurChk()
+    if turtle.detectUp() == true then
+        turtle.digUp()
+        turtle.up()
+    else
+        turtle.up()
+    end
+end
+
+function DownMove()
+    TurChk()    
+    if turtle.detectDown() == true then
+        turtle.digDown()
+        turtle.down()
+        turtle.turnLeft()
+        turtle.turnLeft()
+    else
+        turtle.down()
+        turtle.turnLeft()
+        turtle.turnLeft()
+    end
+end
+
+function DigFor(x)
+    for i = 0, x do
+        TurChk()
+        if turtle.detect() then
+            turtle.dig()
+            turtle.forward()
+        else
+            turtle.forward()
+        end
+    end
+end
+
+function turnAround()
+	turtle.turnRight()
+	turtle.turnRight()
+end
+
+function CleanInv()
+    local name
+    for i = 1, 16 do
+        name = turtle.getItemDetail(i)
+        if name then
+            if name.name == 'minecraft:cobblestone' then
+                turtle.select(i)
+                turtle.drop()
+            elseif name.name == 'minecraft:dirt' then
+                turtle.select(i)
+                turtle.drop()
+            end
+        end
+    end
+end         
+
+
+print("Enter how far you want to mine?")
+local deep = tonumber(read())
+
+print("How wide do you want to go?")   
+local width = tonumber(read())
+
+print("How high do you want to go?")
+local height = tonumber(read())      
+local check = 0
+turtle.select(1)    
+ 
+DigFor(deep)
+turnAround()
+DigFor(deep)
+if height > 1 then
+	UpMove()
+	check = check + 1
+end
+
+for i = 0, check do
+	DownMove()
+end
+
+check = 0
+--add the loop
+-- edit: V2 uploaded on turtles (working).
